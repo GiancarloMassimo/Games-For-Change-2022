@@ -24,7 +24,7 @@ public class InventoryDisplay : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < 5; i++)
+        for(int i = 0; i < 50; i++)
         {
             int index = Random.Range(0, items.Length);
             inventory.Add(items[index]);

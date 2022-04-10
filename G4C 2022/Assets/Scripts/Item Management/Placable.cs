@@ -50,7 +50,15 @@ public class Placable : MonoBehaviour
     void SetPosition()
     {
         transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector2(Mathf.Floor(transform.position.x), Mathf.Floor(transform.position.y));
+        transform.position = RoundToQuarter(transform.position);
+    }
+
+    Vector2 RoundToQuarter(Vector2 vector)
+    {
+        return new Vector2(
+            (float)Math.Round(vector.x, MidpointRounding.ToEven),
+            (float)Math.Round(vector.y, MidpointRounding.ToEven)
+            );
     }
 
     void SetColor()

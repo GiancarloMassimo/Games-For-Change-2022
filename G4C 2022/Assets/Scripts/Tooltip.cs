@@ -40,13 +40,13 @@ public class Tooltip : MonoBehaviour
 
     void Update()
     {
-        if (Application.isEditor)
-        {
+        //if (Application.isEditor)
+        //{
             int headerLength = headerElement.text.Length;
             int contentLength = contentElement.text.Length;
 
             layoutElement.enabled = headerLength > characterWrapLimit || contentLength > characterWrapLimit;
-        }
+        //}
 
         Vector2 pos = cam.ScreenToWorldPoint(Input.mousePosition);
 

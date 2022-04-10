@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1bd97c41ce90648b227b37ee080062, type: 3}
   m_Name: Ladder
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 2bf399e39b9168c40a83cd95b818e8f3, type: 3}
+  icon: {fileID: 21300000, guid: bd85b2051187e2041aefabffdf9321e3, type: 3}
   placable: {fileID: 6982817188554742055, guid: d4d48eedc44741a46a6fc1c0886b701c, type: 3}
   displayName: Ladder
   description: Climb to reach higher

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1bd97c41ce90648b227b37ee080062, type: 3}
   m_Name: LeftStair
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 7275feced7f55e7408897b67262f7019, type: 3}
+  icon: {fileID: 21300000, guid: de49edbc4fd7e564ba2fbbcd51b67ec4, type: 3}
   placable: {fileID: 5819155144788324207, guid: b21da46b172b9bd418180699be211413, type: 3}
   displayName: Left Stair
   description: Left-facting set of stairs

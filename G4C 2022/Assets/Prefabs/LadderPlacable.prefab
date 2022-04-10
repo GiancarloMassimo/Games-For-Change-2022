@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 2a8b5217f7dbb684393b6cea7c7285f9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 928324935fc37be4ab0fdd3ecf9a18a6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,6 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bee07e4d65293e448ab346ac8af636e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  makeEnergyRangesVisible: 0
   obejctToPlace: {fileID: 6404090672786891891, guid: d7c9f7a54c6d12b41a51c201a74c8ec5, type: 3}
   invalidColor: {r: 1, g: 0, b: 0, a: 0.5019608}
   validColor: {r: 0.14438558, g: 1, b: 0, a: 0.5019608}
@@ -104,6 +105,7 @@ MonoBehaviour:
   - {fileID: 3897758885930625341}
   cannotOverlap:
   - {fileID: 5650920443940689612}
+  spriteRenderer: {fileID: 0}
 --- !u!1001 &3658147701245324846
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1bd97c41ce90648b227b37ee080062, type: 3}
   m_Name: RightStair
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: b9cb968ebb0e93e47bb8535a460fd0c0, type: 3}
+  icon: {fileID: 21300000, guid: 829c4039b4340f64188969dad4f39430, type: 3}
   placable: {fileID: 207381636891477705, guid: 1bfd560f6a766764eb437b59eea3725b, type: 3}
   displayName: Right Stair
   description: Right-facing set of stairs
