@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a1bd97c41ce90648b227b37ee080062, type: 3}
   m_Name: SolarPanel
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: f568564a60b6a4042be3544825f8e569, type: 3}
+  icon: {fileID: 21300000, guid: 17e398b1c7a777c4abf6493da3570916, type: 3}
   placable: {fileID: 6901350811437231442, guid: 8e2707d8fc3b7df49a1e5fb0e002b363, type: 3}
   displayName: Solar Panel
   description: Generates energy from the sun to power buildings

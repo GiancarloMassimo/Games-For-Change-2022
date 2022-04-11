@@ -20,18 +20,25 @@ public class Placable : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     bool canPlace;
 
+    Vector2 localOffset;
+
     void Awake()
     {
+        if (spriteRenderer == null)
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            localOffset = Vector2.zero;
+        }
+        else
+        {
+            localOffset = spriteRenderer.transform.localPosition;
+        }
         SetPosition();
     }
 
     void Start()
     {
         PlacingItem?.Invoke(true);
-        if (spriteRenderer == null)
-        {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-        }
     }
 
     void Update()
@@ -50,14 +57,29 @@ public class Placable : MonoBehaviour
     void SetPosition()
     {
         transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = RoundToQuarter(transform.position);
+        transform.position = RoundToInt(transform.position);
+        transform.position = RestrictToMapBounds(transform.position);
     }
 
-    Vector2 RoundToQuarter(Vector2 vector)
+    Vector2 RoundToInt(Vector2 vector)
     {
         return new Vector2(
             (float)Math.Round(vector.x, MidpointRounding.ToEven),
             (float)Math.Round(vector.y, MidpointRounding.ToEven)
+            );
+    }
+
+    Vector2 RestrictToMapBounds(Vector2 vector)
+    {
+        const float MapOffsetY = 5.51f;
+        const float MapWidth = 38, MapHeight = 21;
+        float width = spriteRenderer.sprite.bounds.size.x, height = spriteRenderer.sprite.bounds.size.y;
+
+        return new Vector2(
+                Mathf.Clamp(vector.x, -MapWidth / 2 + width / 2 - localOffset.x, 
+                                       MapWidth / 2 - width / 2 - localOffset.x),
+                Mathf.Clamp(vector.y, -MapHeight / 2 + height / 2 + MapOffsetY - localOffset.y,
+                                       MapHeight / 2 - height / 2 + MapOffsetY - localOffset.y)
             );
     }
 
