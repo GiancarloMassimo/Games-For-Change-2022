@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class InventoryDisplay : MonoBehaviour
 {
-    [SerializeField] Item[] items;
     [SerializeField] GameObject itemSlot;
     [SerializeField] Image panelImage;
 
     Inventory inventory;
+    ItemFeeder itemFeeder;
     ItemSlotDisplay[] itemSlots;
 
     public Item ItemPlacing { get; set; }
@@ -24,11 +24,11 @@ public class InventoryDisplay : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < 50; i++)
-        {
-            int index = Random.Range(0, items.Length);
-            inventory.Add(items[index]);
-        }
+        itemFeeder = GetComponent<ItemFeeder>();
+        itemFeeder.Inventory = inventory;
+        itemFeeder.FeedItems();
+        ShowHideInventory(true);
+        Invoke(nameof(ShowInventoryAfterEntryAnimation), 5f);
     }
 
     void Update()
@@ -59,7 +59,7 @@ public class InventoryDisplay : MonoBehaviour
 
     void CreateItemSlots()
     {
-        itemSlots = new ItemSlotDisplay[5];
+        itemSlots = new ItemSlotDisplay[inventory.MaxItems];
         for (int i = 0; i < itemSlots.Length; i++)
         {
             GameObject newItemSlot = Instantiate(itemSlot, transform);
@@ -86,6 +86,11 @@ public class InventoryDisplay : MonoBehaviour
             inventory.Remove(ItemPlacing);
             ItemPlacing = null;
         }
+    }
+
+    void ShowInventoryAfterEntryAnimation()
+    {
+        ShowHideInventory(false);
     }
 
     void OnDisable()

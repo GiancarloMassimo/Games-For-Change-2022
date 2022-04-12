@@ -5,7 +5,8 @@ using System;
 
 public class Inventory
 {
-    public static event Action InventoryUpdated; 
+    public static event Action InventoryUpdated;
+    public readonly int MaxItems = 5;
 
     public int ItemsInInventory { get; private set; }
 
@@ -19,6 +20,11 @@ public class Inventory
 
     public void Add(Item item)
     {
+        if (ItemsInInventory == MaxItems)
+        {
+            return;
+        }
+
         if (Items.ContainsKey(item))
         {
             Items[item] = Items[item] + 1;
