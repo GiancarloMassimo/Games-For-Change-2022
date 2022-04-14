@@ -15,4 +15,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: f6d9423ea8c2fba449eaffd33f6e1390, type: 3}
   placable: {fileID: 6901350811437231442, guid: 1802749f00f7a3b4293755118eb4cc84, type: 3}
   displayName: Bird House
-  description: A habit for birds
+  description: A habitat for birds
+  recurring: 0
+  itemType: 8

@@ -16,3 +16,5 @@ MonoBehaviour:
   placable: {fileID: 186530323148695353, guid: 913744fab11a13e4b8912b5c34822dd4, type: 3}
   displayName: Plank
   description: Simple platform for buildings
+  recurring: 0
+  itemType: 0

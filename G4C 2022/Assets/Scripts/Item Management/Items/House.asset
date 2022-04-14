@@ -16,3 +16,5 @@ MonoBehaviour:
   placable: {fileID: 6901350811437231442, guid: 2fe1a2ddce886134ab55ee1ce75b06b9, type: 3}
   displayName: House
   description: Must be placed near an energy source
+  recurring: 1
+  itemType: 2

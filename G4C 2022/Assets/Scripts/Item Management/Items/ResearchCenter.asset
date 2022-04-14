@@ -16,3 +16,5 @@ MonoBehaviour:
   placable: {fileID: 6901350811437231442, guid: af1b7948ed35fde42a3181f8ec39650c, type: 3}
   displayName: Research Center
   description: Unlocks new technologies
+  recurring: 0
+  itemType: 5

@@ -11,12 +11,14 @@ public class Item : ScriptableObject, IComparable<Item>
     [SerializeField] string displayName;
     [SerializeField] string description;
     [SerializeField] bool recurring;
+    [SerializeField] Items itemType;
 
     public Sprite Icon { get => icon; }
     public GameObject Placable { get => placable; }
     public string DisplayName { get => displayName; }
     public string Description { get => description; }
     public bool Recurring { get => recurring; }
+    public Items ItemType { get => itemType; }
 
     public int CompareTo(Item other)
     {

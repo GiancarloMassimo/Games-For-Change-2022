@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
         originalPos = new Vector2(-2, -1.5f);
         Invoke(nameof(EnableInput), 5f);
         anim = GetComponent<Animator>();
+        Physics2D.IgnoreLayerCollision(8, 12);
     }
 
     void Update()

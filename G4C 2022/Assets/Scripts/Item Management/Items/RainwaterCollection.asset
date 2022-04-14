@@ -16,3 +16,5 @@ MonoBehaviour:
   placable: {fileID: 6901350811437231442, guid: af99cfa206fa47345a3ed040400a0095, type: 3}
   displayName: Rainwater Collection
   description: Allows for a steady supply of water
+  recurring: 0
+  itemType: 9

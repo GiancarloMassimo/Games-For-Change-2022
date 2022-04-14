@@ -16,3 +16,5 @@ MonoBehaviour:
   placable: {fileID: 6901350811437231442, guid: 84ed6221754b0b64d88b44cd4802f3f9, type: 3}
   displayName: Urban Farming
   description: An urban farm allows for more a more sustainable food supply.
+  recurring: 0
+  itemType: 7

@@ -16,3 +16,5 @@ MonoBehaviour:
   placable: {fileID: 6901350811437231442, guid: b337622a8dfdf684b81a125bd331b3ab, type: 3}
   displayName: Skycraper
   description: Skycrapers house more people in less space
+  recurring: 1
+  itemType: 3
