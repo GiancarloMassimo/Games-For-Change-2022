@@ -13,6 +13,10 @@ public class GameMetrics : MonoBehaviour
     [SerializeField] GameObject pauseMenu,
         Solar, Wind, House, Skyscrape, Recycle, Research, Park, Farm, Bird, Rain, Car;
 
+    [SerializeField] GameObject gameOver;
+    [SerializeField] Image[] gameOverBars;
+    [SerializeField] Color achievementUnlockedColor;
+
     Dictionary<Items, int> itemCounts;
     [HideInInspector]
     public ItemFeeder itemFeeder;
@@ -68,7 +72,7 @@ public class GameMetrics : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && DayNumber <= 20)
         {
             if (Time.timeScale == 0)
             {
@@ -118,7 +122,30 @@ public class GameMetrics : MonoBehaviour
         }
         else
         {
-            //end game
+            gameOver.SetActive(true);
+            if (Renewable())
+            {
+                gameOverBars[0].color = achievementUnlockedColor;
+            }
+            if (GoingGreen())
+            {
+                gameOverBars[1].color = achievementUnlockedColor;
+            }
+            if (Engineering())
+            {
+                gameOverBars[2].color = achievementUnlockedColor;
+            }
+            if (Expansion())
+            {
+                gameOverBars[3].color = achievementUnlockedColor;
+            }
+            if (Completionist())
+            {
+                gameOverBars[4].color = achievementUnlockedColor;
+            }
+
+
+            Time.timeScale = 0;
         }
     }
 
@@ -193,6 +220,36 @@ public class GameMetrics : MonoBehaviour
             itemFeeder.UnlockItem(Items.CableCar);
             CableCarUnlocked = true;
         }
+    }
+
+    bool Renewable()
+    {
+        return itemCounts[Items.WindTurbine] > 0 && itemCounts[Items.SolarPanel] > 0;
+    }
+
+    bool GoingGreen()
+    {
+        return itemCounts[Items.Park] > 0 && itemCounts[Items.BirdHouse] > 0;
+    }
+
+    bool Engineering()
+    {
+        return itemCounts[Items.SkyScraper] > 0 && itemCounts[Items.CableCar] > 0;
+    }
+
+    bool Expansion()
+    {
+        return Population >= 50;
+    }
+
+    bool Completionist()
+    {
+        foreach (Items item in itemCounts.Keys)
+        {
+            if (itemCounts[item] == 0) return false; 
+        }
+
+        return true;
     }
 }
 
