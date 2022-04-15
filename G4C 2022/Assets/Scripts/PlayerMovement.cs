@@ -35,6 +35,12 @@ public class PlayerMovement : MonoBehaviour
         {
             GetInput();
         }
+
+        if (transform.position.y >= 12 && !GameMetrics.Instance.highAltitudeTriggered)
+        {
+            GameMetrics.Instance.highAltitudeTriggered = true;
+            GameMetrics.Instance.UpdateUnlocks();
+        }
     }
 
     void FixedUpdate()

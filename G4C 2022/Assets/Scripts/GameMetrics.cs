@@ -14,7 +14,11 @@ public class GameMetrics : MonoBehaviour
         Solar, Wind, House, Skyscrape, Recycle, Research, Park, Farm, Bird, Rain, Car;
 
     Dictionary<Items, int> itemCounts;
-    ItemFeeder itemFeeder;
+    [HideInInspector]
+    public ItemFeeder itemFeeder;
+    [HideInInspector]
+    public bool floatingIslandTriggered = false, highAltitudeTriggered = false;
+
 
     public int DayNumber { get; set; }
     public int Population { get; set; }
@@ -106,11 +110,20 @@ public class GameMetrics : MonoBehaviour
     {
         DayNumber++;
         dayText.text = "Day " + (DayNumber < 10 ? "0" : "") + DayNumber;
-        UpdateUnlocks();
+        if (DayNumber == 21) dayText.text = 20 + "";
+        if (DayNumber <= 20)
+        {
+            UpdateUnlocks();
+            itemFeeder.FeedItems();
+        }
+        else
+        {
+            //end game
+        }
     }
 
 
-    void UpdateUnlocks()
+    public void UpdateUnlocks()
     {
         if (!SolarPanelUnlocked && DayNumber == 2)
         {
@@ -122,6 +135,63 @@ public class GameMetrics : MonoBehaviour
         {
             itemFeeder.UnlockItem(Items.House);
             HouseUnlocked = true;
+        }
+
+        if (!WindTurbineUnlocked && itemCounts[Items.House] > 2)
+        {
+            itemFeeder.UnlockItem(Items.WindTurbine);
+            WindTurbineUnlocked = true;
+        }
+
+        if (!UrbanFarmingUnlocked && Population >= 20)
+        {
+            itemFeeder.UnlockItem(Items.UrbanFarming);
+            UrbanFarmingUnlocked = true;
+        }
+
+        if (!SkyScraperUnlocked && itemCounts[Items.UrbanFarming] > 0)
+        {
+            itemFeeder.UnlockItem(Items.SkyScraper);
+            SkyScraperUnlocked = true;
+        }
+        
+
+
+        if (!ParkUnlocked && floatingIslandTriggered)
+        {
+            itemFeeder.UnlockItem(Items.Park);
+            ParkUnlocked = true;
+        }
+
+        if (!BirdHouseUnlocked && itemCounts[Items.Park] > 0)
+        {
+            itemFeeder.UnlockItem(Items.BirdHouse);
+            BirdHouseUnlocked = true;
+        }
+
+        if (!RainwaterCollectionUnlocked && itemCounts[Items.BirdHouse] > 0)
+        {
+            itemFeeder.UnlockItem(Items.RainwaterCollection);
+            RainwaterCollectionUnlocked = true;
+        }
+
+
+        if (!ResearchCenterUnlocked && highAltitudeTriggered)
+        {
+            itemFeeder.UnlockItem(Items.ResearchCenter);
+            ResearchCenterUnlocked = true;
+        }
+
+        if (!RecyclingPlantUnlocked && itemCounts[Items.ResearchCenter] > 0)
+        {
+            itemFeeder.UnlockItem(Items.RecyclingPlant);
+            RecyclingPlantUnlocked = true;
+        }
+
+        if (!CableCarUnlocked && itemCounts[Items.RecyclingPlant] > 0)
+        {
+            itemFeeder.UnlockItem(Items.CableCar);
+            CableCarUnlocked = true;
         }
     }
 }

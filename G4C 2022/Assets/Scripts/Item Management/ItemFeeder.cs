@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
 public class ItemFeeder : MonoBehaviour
 {
     [SerializeField] Item[] items;
@@ -14,30 +13,22 @@ public class ItemFeeder : MonoBehaviour
 
     [Header("Building Item Ratio Distribution")]
     [SerializeField] float plankRatio, ladderRatio, stairRatio;
+    [SerializeField] int houseToEnergyRatio;
 
     float plankRate, ladderRate;
 
     Queue<Item> unlockedItems;
-    Queue<Item> recurringItems;
-
-    bool doubledUpOnHouses = false;
+    List<Item> recurringHouse;
+    List<Item> recurringEnergy;
 
     public Inventory Inventory {get; set;}
 
     private void Awake()
     {
         unlockedItems = new Queue<Item>();
-        recurringItems = new Queue<Item>();
+        recurringHouse = new List<Item>();
+        recurringEnergy = new List<Item>();
         ConvertItemRatiosToPercentages();
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            GameMetrics.Instance.NextDay();
-            FeedItems();
-        } 
     }
 
     public void FeedItems()
@@ -64,22 +55,27 @@ public class ItemFeeder : MonoBehaviour
         int recurringItemsToAdd = Inventory.MaxItems - n;
         while (recurringItemsToAdd > 0)
         {
-            if (recurringItems.Count == 0)
+            if (recurringHouse.Count == 0)
             {
                 AddBuildingItem();
             }
             else
             {
-                Item i = recurringItems.Peek();
-                Inventory.Add(i);
-                if (i.ItemType == Items.House && !doubledUpOnHouses)
+                if (recurringHouse.Count == 0)
                 {
-                    doubledUpOnHouses = true;
-                    recurringItems.Enqueue(i);
+                    Inventory.Add(recurringEnergy[0]);
+                    continue;
                 }
                 else
                 {
-                    recurringItems.Enqueue(recurringItems.Dequeue());
+                    if (Random.Range(0f, 1f) < 1f/(houseToEnergyRatio + 1f))
+                    {
+                        Inventory.Add(recurringEnergy[Random.Range(0, recurringEnergy.Count)]);
+                    }
+                    else
+                    {
+                        Inventory.Add(recurringHouse[Random.Range(0, recurringHouse.Count)]);
+                    }
                 }
             }
             recurringItemsToAdd--;
@@ -87,11 +83,14 @@ public class ItemFeeder : MonoBehaviour
 
         foreach (Item item in recurring)
         {
-            recurringItems.Enqueue(item);
+            if (item.ItemType == Items.House || item.ItemType == Items.SkyScraper)
+                recurringHouse.Add(item);
+            else
+                recurringEnergy.Add(item);
         }
     }
 
-    void AddBuildingItem()
+    public void AddBuildingItem()
     {
         float p = Random.Range(0f, 1f);
 
