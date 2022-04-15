@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameMetrics : MonoBehaviour
 {
@@ -16,13 +17,13 @@ public class GameMetrics : MonoBehaviour
     [SerializeField] GameObject gameOver;
     [SerializeField] Image[] gameOverBars;
     [SerializeField] Color achievementUnlockedColor;
+    [SerializeField] InfoTrigger info;
 
     Dictionary<Items, int> itemCounts;
     [HideInInspector]
     public ItemFeeder itemFeeder;
     [HideInInspector]
     public bool floatingIslandTriggered = false, highAltitudeTriggered = false;
-
 
     public int DayNumber { get; set; }
     public int Population { get; set; }
@@ -61,17 +62,25 @@ public class GameMetrics : MonoBehaviour
         Instance = this;
 
         itemCounts = new Dictionary<Items, int>();
-
         itemFeeder = FindObjectOfType<ItemFeeder>();
 
         foreach (Items i in Enum.GetValues(typeof(Items)))
         {
             itemCounts.Add(i, 0);
         }
+
+        Destroy(GameObject.FindGameObjectWithTag("MenuMusic"));
+        StartCoroutine(InitialInfo());
     }
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R) && gameOver.activeInHierarchy)
+        {
+            Time.timeScale = 1;
+            SceneManager.LoadScene("Game");
+        }
+
         if (Input.GetKeyDown(KeyCode.Q) && DayNumber <= 20)
         {
             if (Time.timeScale == 0)
@@ -113,6 +122,10 @@ public class GameMetrics : MonoBehaviour
     public void NextDay()
     {
         DayNumber++;
+        if (DayNumber == 2)
+        {
+            StopAllCoroutines();
+        }
         dayText.text = "Day " + (DayNumber < 10 ? "0" : "") + DayNumber;
         if (DayNumber == 21) dayText.text = 20 + "";
         if (DayNumber <= 20)
@@ -149,18 +162,31 @@ public class GameMetrics : MonoBehaviour
         }
     }
 
+    IEnumerator InitialInfo()
+    {
+        yield return new WaitForSeconds(5);
+        info.Trigger(4, "Welcome! Your task is to build a city in the clouds in 20 days.");
+        yield return new WaitForSeconds(4.5f);
+        info.Trigger(6, "Use A and D to move and SPACE to jump. Use W and S to move on ladders.");
+        yield return new WaitForSeconds(6.5f);
+        info.Trigger(9, "The panel at the bottom is your inventory. Click on an item to place it. Right-click to cancel your selection.");
+        yield return new WaitForSeconds(9.5f);
+        info.Trigger(9, "Once you're done placing items, return to the elevator and press E. This will refill your inventory with up to 5 items.");
+    }
 
     public void UpdateUnlocks()
     {
         if (!SolarPanelUnlocked && DayNumber == 2)
         {
             itemFeeder.UnlockItem(Items.SolarPanel);
+            info.Trigger(8, "You unlocked a solar panel! Press Q to see the unlock tree.");
             SolarPanelUnlocked = true;
         }
 
         if (!HouseUnlocked && itemCounts[Items.SolarPanel] > 0)
         {
             itemFeeder.UnlockItem(Items.House);
+            info.Trigger(8, "You unlocked a house! Housing must be placed within the range of an energy source.");
             HouseUnlocked = true;
         }
 
@@ -212,6 +238,7 @@ public class GameMetrics : MonoBehaviour
         if (!RecyclingPlantUnlocked && itemCounts[Items.ResearchCenter] > 0)
         {
             itemFeeder.UnlockItem(Items.RecyclingPlant);
+            info.Trigger(8, "Recycling lets you gain an extra item once per turn if your inventory is not full.");
             RecyclingPlantUnlocked = true;
         }
 
